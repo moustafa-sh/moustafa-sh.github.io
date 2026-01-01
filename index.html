@@ -1,174 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Random Chooser Niggas</title>
-<style>
-  /* === Retro Robotic Theme === */
-  body {
-    background-color: #0c0c0c;
-    color: #00ff99;
-    font-family: "Courier New", monospace;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    text-shadow: 0 0 5px #00ff99;
-  }
+<html>
+    <head>
+        <title>INFERNO TECH</title>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+    </head>
+    <body>
+        <div class="top">
+            <h2>About us</h2>
+        </div>
+        <div class="backone">
+            <img src="data.jpg" class="data">
+            <div class="title">
+            <h1>INFERNO CORP</h1>
+            </div>
+            <a href="insta.html"><div class="backabout">
+                <h3 style="color: white;">Join us using insta!</h3>
+                <img src="insta.png">
+               
+            </div></a>
+        </div>
+        <div class="about">
+        <p style="font-size: small;">
+            Inferno Tech is an innovative technology company that specializes in cutting-edge 
+            software solutions and advanced AI applications. Founded in 2020, the company has 
+            quickly gained recognition for its commitment to transforming industries through 
+            technology. With a diverse team of experts, Inferno Tech focuses on developing 
+            scalable platforms that enhance operational efficiency and drive digital 
+            transformation for businesses worldwide. Their flagship products include a 
+            powerful data analytics tool and a robust machine learning framework, both 
+            designed to empower organizations to make data-driven decisions. Committed 
+            to sustainability, Inferno Tech also emphasizes eco-friendly practices in 
+            its operations and product development.
+        </p>
+        </div>
+        <div class="gg">
+        <div class="work">
+            <h1>Make money with us!</h1>
+            <p style="text-align: center;">Be parter of one of the biggest tech companies, make a fortune with us. <a  id="myButton"><span style="color: red; cursor: pointer;">Start now!</span></a></p>
+            <img src="money.jpg">
+        </div></div>
+        
+        <script>
 
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #00ff99;
-    padding-bottom: 10px;
-    text-align: center;
-    letter-spacing: 2px;
-  }
+        function showWarning() {
+            alert("You must join us on instagram first!");
+        }
 
-  .terminal-box {
-    border: 2px solid #00ff99;
-    padding: 20px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 0 15px #00ff99;
-    border-radius: 10px;
-    background: radial-gradient(circle at center, #001a12 0%, #000000 100%);
-  }
-
-  input[type="text"], input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    background-color: #000;
-    border: 1px solid #00ff99;
-    color: #00ff99;
-    font-family: inherit;
-  }
-
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-
-  input[type="checkbox"] {
-    transform: scale(1.3);
-    margin-right: 8px;
-  }
-
-  button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #00ff99;
-    background-color: transparent;
-    color: #00ff99;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    font-family: inherit;
-  }
-
-  button:hover {
-    background-color: #00ff99;
-    color: #000;
-    text-shadow: none;
-  }
-
-  #name-list {
-    margin-top: 15px;
-    border: 1px dashed #00ff99;
-    padding: 10px;
-    min-height: 50px;
-  }
-
-  .result {
-    margin-top: 20px;
-    border-top: 2px dashed #00ff99;
-    padding-top: 10px;
-  }
-
-  .notification {
-    background-color: #001f14;
-    border: 1px solid #00ff99;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    animation: blink 0.5s step-end infinite alternate;
-  }
-
-  @keyframes blink {
-    from { box-shadow: 0 0 10px #00ff99; }
-    to { box-shadow: 0 0 2px #00ff99; }
-  }
-</style>
-</head>
-<body>
-  <h1>Random Chooser Niggas</h1>
-
-  <div class="terminal-box">
-    <label>Enter Names (one per line):</label>
-    <textarea id="names" rows="6" placeholder="Type names here..."></textarea>
-
-    <label>Select number of random picks:</label>
-    <input type="number" id="num-select" min="1" value="1">
-
-    <label>
-      <input type="checkbox" id="delete-checked">
-      Delete the selected randoms
-    </label>
-
-    <button id="go-btn">GO ⚡</button>
-
-    <div class="result" id="result"></div>
-  </div>
-
-<script>
-  const goBtn = document.getElementById("go-btn");
-  const resultBox = document.getElementById("result");
-  const namesArea = document.getElementById("names");
-  const numSelect = document.getElementById("num-select");
-  const deleteBox = document.getElementById("delete-checked");
-
-  goBtn.addEventListener("click", () => {
-    let names = namesArea.value.split("\n").map(n => n.trim()).filter(n => n);
-    const n = names.length;
-    const x = parseInt(numSelect.value);
-
-    if (n === 0) {
-      alert("No names entered!");
-      return;
-    }
-    if (x < 1 || x > n) {
-      alert("Invalid number selected!");
-      return;
-    }
-
-    // Pick random x names
-    const chosen = [];
-    const available = [...names];
-    for (let i = 0; i < x; i++) {
-      const randIndex = Math.floor(Math.random() * available.length);
-      chosen.push(available[randIndex]);
-      available.splice(randIndex, 1);
-    }
-
-    // Show notification
-    resultBox.innerHTML = "";
-    const note = document.createElement("div");
-    note.className = "notification";
-    note.innerHTML = `<strong>Chosen:</strong> ${chosen.join(", ")}`;
-    resultBox.appendChild(note);
-
-    // Delete if true
-    if (deleteBox.checked) {
-      names = names.filter(n => !chosen.includes(n));
-      namesArea.value = names.join("\n");
-    }
-  });
-</script>
-</body>
+        window.onload = function() {
+            
+            const button = document.getElementById('myButton');
+            
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                showWarning(); 
+            });
+        };
+    </script>
+    <h2 style="margin-top: 70px; position: absolute; left: 50%; transform: translate(-50%, -50%); padding: 50px;">copyright reserved.</h2>
+    </body>
 </html>
