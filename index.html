@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="style.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       
+        <meta http-equiv="refresh" content="100">
     </head>
     <body>
         <div class="top">
@@ -44,18 +44,19 @@
         </div></div>
         
         <script>
-
+        // Function to display the warning message
         function showWarning() {
             alert("You must join us on instagram first!");
         }
 
+        // Add event listener after the DOM is fully loaded
         window.onload = function() {
-            
+            // Get the <a> element
             const button = document.getElementById('myButton');
-            
+            // Add click event listener
             button.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                showWarning(); 
+                event.preventDefault(); // Prevent default action of the anchor
+                showWarning(); // Call the function to show warning
             });
         };
     </script>
